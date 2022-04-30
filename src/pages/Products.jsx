@@ -36,13 +36,18 @@ export const Products = () => {
   return (
     <Layout>
       <p className="text-red-500 text-xl">LISTA DE PRODUCTOS DISPONIBLES</p>
-        <div className="flex mt-2">
+      <div className="flex mt-2">
         <div className="mt-1">
-          <label className="text-gradient font-semibold text-sm">Buscar Producto</label>
-          <input placeholder="Escribe para buscar" className="ml-4 border w-96 rounded py-2 px-2 text-sm"/>
+          <label className="text-gradient font-semibold text-sm">
+            Buscar Producto
+          </label>
+          <input
+            placeholder="Escribe para buscar"
+            className="ml-4 border w-96 rounded py-2 px-2 text-sm"
+          />
         </div>
         <button className="bg-very-blue text-white py-2 rounded-xl text-base font-semibold w-64 ml-10">
-        <Link to="/add-product">Agregar Producto</Link>
+          <Link to="/add-product">Agregar Producto</Link>
         </button>
       </div>
       <Table>
@@ -80,12 +85,12 @@ export const Products = () => {
         pageSize={pagination.size}
       />
       <div className="flex">
-      <button className="gradient-noname mx-4 mt-6 text-white py-2 text-lg font-semibold px-8 rounded">
-        <Link to="/">Volver al inicio</Link>
-      </button>
-      <button className="bg-danger mx-4 mt-6 text-white py-2 text-lg font-semibold px-8 rounded">
-      Cerrar Sesion
-    </button>
+        <button className="gradient-noname mx-4 mt-6 text-white py-2 text-lg font-semibold px-8 rounded">
+          <Link to="/">Volver al inicio</Link>
+        </button>
+        <button className="bg-danger mx-4 mt-6 text-white py-2 text-lg font-semibold px-8 rounded">
+          Cerrar Sesion
+        </button>
       </div>
     </Layout>
   );

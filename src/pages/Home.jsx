@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { getProductByCode } from "../api/products.api";
-import { formatDate, setItemCart } from "../utils/functions";
+import { deleteItems, formatDate, getItems, setItemCart } from "../utils/functions";
 import { ProductsList } from "../components/ProductsList";
 import useEventListener from "../hooks/use-event-listener";
 import Clock from "../components/Clock";
 import { Layout } from "../components/Layout";
 import { Link } from "react-router-dom";
 import { ChartBar } from "../components/Chart";
+import { addSale } from "../api/sale.api";
+import { toast } from "react-toastify";
 
 export const Home = () => {
   const [reload, setReload] = useState(false);
   const [code, setCode] = useState("");
-  var barcode = "";
-  var interval;
+  let barcode = "";
+  let interval;
   const handler = function (evt) {
     if (interval) clearInterval(interval);
     if (evt.code == "Enter") {
@@ -37,13 +39,26 @@ export const Home = () => {
     e.preventDefault();
     getProduct(code);
   };
+
+  const addNewSale = () => {
+    if (getItems()) {
+      addSale(getItems()).then(({ data }) => {
+        if (data.ok) {
+          toast.success("Se ah realizado la compra")
+          deleteItems()
+          setReload(true);
+        };
+      });
+    }
+  };
+
   return (
     <Layout>
       <div className="grid grid-cols-2 gap-6">
         <div>
           <p className="text-red-500 text-2xl">LISTA DE PRODUCTOS</p>
           <ProductsList reload={reload} setReload={setReload} />
-          <button className="bg-quepal w-full text-white py-2 mt-28 text-lg font-semibold px-8 rounded-xl">
+          <button onClick={addNewSale} className="bg-quepal w-full text-white py-2 mt-28 text-lg font-semibold px-8 rounded-xl">
             Realizar Venta
           </button>
           <button className="bg-hydrogen w-full text-white py-2 mt-6 text-lg font-semibold px-8 rounded-xl">
@@ -89,7 +104,7 @@ export const Home = () => {
             <Link to="/products">Ver Productos</Link>
           </button>
           <button className="gradient-noname text-white py-2 text-lg mt-4 font-semibold px-8 rounded-xl">
-            Ver Historial de Ventas
+          <Link to="/sales-history">Ver Historial de Ventas</Link>
           </button>
           <button className="bg-danger text-white py-2 text-lg mt-4 font-semibold px-8 rounded-xl">
             Cerrar Sesion

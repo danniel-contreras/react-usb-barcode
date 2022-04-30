@@ -7,14 +7,14 @@ export function setItemCart(product) {
         sumItemCart(product);
         return;
       }
-      const newpd = { ...product, qt: 1 };
+      const newpd = { ...product, quantity: 1 };
       const newItem = cartsItems.concat(newpd);
       localStorage.setItem("cart", JSON.stringify(newItem));
       return { newItem };
     }
     return;
   }
-  const newpd = { ...product, qt: 1 };
+  const newpd = { ...product, quantity: 1 };
   localStorage.setItem("cart", JSON.stringify([newpd]));
 }
 
@@ -22,14 +22,18 @@ export function sumItemCart(product) {
   const cartsItems = getItems();
   const fnd = cartsItems.find((a) => a.id === product.id);
   const index = cartsItems.indexOf(fnd);
-  cartsItems[index].qt++;
+  cartsItems[index].quantity++;
   cartsItems[index].total_price =
-    cartsItems[index].qt * cartsItems[index].price;
+    cartsItems[index].quantity * cartsItems[index].price;
   localStorage.setItem("cart", JSON.stringify(cartsItems));
 }
 
 export function getItems() {
   return JSON.parse(localStorage.getItem("cart") || "[]");
+}
+
+export function deleteItems(){
+  localStorage.removeItem("cart")
 }
 
 export function formatAMPM(date) {
@@ -68,7 +72,7 @@ export const getTotal = () => {
 
   return (
     items &&
-    items.map((i) => Number(i.qt) * Number(i.price)).reduce((a, b) => a + b, 0)
+    items.map((i) => Number(i.quantity) * Number(i.price)).reduce((a, b) => a + b, 0)
   );
 };
 
@@ -78,10 +82,10 @@ export function removeItem(item, option) {
       const cartsItems = getItems();
       const fnd = cartsItems.find((a) => a.id === item.id);
       const index = cartsItems.indexOf(fnd);
-      if (option === "remove" || cartsItems[index].qt <= 1) {
+      if (option === "remove" || cartsItems[index].quantity <= 1) {
         cartsItems.splice(index, 1);
-      } else if (cartsItems[index].qt > 1) {
-          cartsItems[index].qt--;
+      } else if (cartsItems[index].quantity > 1) {
+          cartsItems[index].quantity--;
       }
       localStorage.setItem("cart", JSON.stringify(cartsItems));
     }

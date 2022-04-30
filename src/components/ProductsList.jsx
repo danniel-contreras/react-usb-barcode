@@ -49,7 +49,7 @@ export const ProductsList = ({ reload, setReload }) => {
                   className=" bg-orange-500 mx-2 w-4 rounded-full p-1 h-4 cursor-pointer"
                   icon={faMinus}
                 />
-                {p.qt && p.qt > 1 ? p.qt : 1}
+                {p.quantity && p.quantity > 1 ? p.quantity : 1}
                 <FontAwesomeIcon
                   onClick={() => sum(p)}
                   className="bg-green-500 h-4 p-1 mx-2 rounded-full w-4 cursor-pointer"
@@ -62,8 +62,8 @@ export const ProductsList = ({ reload, setReload }) => {
                 />
               </div>
               <div className="w-32 text-xs bg-gray-400 py-2">
-                {p.qt && p.qt > 1
-                  ? `$${(Number(p.qt) * Number(p.price)).toFixed(2)}`
+                {p.quantity && p.quantity > 1
+                  ? `$${(Number(p.quantity) * Number(p.price)).toFixed(2)}`
                   : `$${Number(p.price)}`}
               </div>
             </div>

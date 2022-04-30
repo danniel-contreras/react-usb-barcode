@@ -11,9 +11,20 @@ export const getProductByCode = (code) => {
 };
 
 export const getProductsPaginated = (page) => {
-  return axios.get(`${API}products?page=${page}&storeId=${getStore()}&take=10`, {
-    headers: {
+  return axios.get(
+    `${API}products?page=${page}&storeId=${getStore()}&take=10`,
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+};
+
+export const addProduct =(data)=> {
+  return axios.post(`${API}products`, data,{
+     headers: {
       authorization: getToken(),
     },
   });
-};
+}
