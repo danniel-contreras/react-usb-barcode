@@ -13,7 +13,7 @@ function Clock(){
     };
   }, []);
   return (
-    <span className='mx-4 text-sm font-semibold'>
+    <span className='mx-4 text-xl md:text-sm lg:text-xl font-semibold'>
       {formatAMPM(date)}
     </span>
   );

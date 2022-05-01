@@ -30,14 +30,119 @@ export const ProductsList = ({ reload, setReload }) => {
     setReload(true);
   };
   return (
-    <div className="mt-3 h-80 max-h-80 mb-10 ">
+    <div className="mt-3">
+      <p className="text-red-500 text-xl md:text-lg lg:text-xl  text-left mb-6">
+        LISTADO DE PRODUCTOS
+      </p>
       <div className="flex text-white font-semibold">
-        <div className="w-64 bg-gray-500 py-2">Producto</div>
-        <div className="w-40 bg-gray-600 py-2">Cantidad</div>
-        <div className="w-32 bg-gray-500 py-2">Total</div>
+        <div style={{ width: "50%" }} className="bg-gray-500 py-2">
+          Producto
+        </div>
+        <div style={{ width: "35%" }} className="bg-gray-600 py-2">
+          Cantidad
+        </div>
+        <div style={{ width: "15%" }} className="bg-gray-500 py-2">
+          Total
+        </div>
       </div>
-      <div className="overflow-auto overflow-x-hidden">
-        {prods.length > 0 &&
+      <div className="overflow-auto responsive__height overflow-x-hidden">
+        <div className="flex text-white font-semibold">
+          <div style={{ width: "50%" }} className="border-b md:text-sm lg:text-lg text-justify bg-gray-400 py-2 pl-4">
+            Aceite Orisol 200gr
+          </div>
+          <div style={{ width: "35%" }} className="border-b flex items-center md:text-sm lg:text-lg bg-gray-500 py-2">
+            <FontAwesomeIcon
+              onClick={() => remove(p)}
+              className=" bg-orange-500 mx-3 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+              icon={faMinus}
+            />
+            <span className="mt-1">2</span>
+            <FontAwesomeIcon
+              onClick={() => sum(p)}
+              className="bg-green-500 mx-3 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+              icon={faPlus}
+            />
+            <FontAwesomeIcon
+              onClick={() => deletep(p)}
+              className=" bg-red-500 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+              icon={faTrash}
+            />
+          </div>
+          <div style={{width:"15%"}} className="border-b text-lg bg-gray-400 py-2">2</div>
+        </div>
+        <div className="flex text-white font-semibold">
+        <div style={{ width: "50%" }} className="border-b md:text-sm lg:text-lg text-justify bg-gray-400 py-2 pl-4">
+          Aceite Orisol 200gr
+        </div>
+        <div style={{ width: "35%" }} className="border-b flex items-center md:text-sm lg:text-lg bg-gray-500 py-2">
+          <FontAwesomeIcon
+            onClick={() => remove(p)}
+            className=" bg-orange-500 mx-3 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+            icon={faMinus}
+          />
+          <span className="mt-1">2</span>
+          <FontAwesomeIcon
+            onClick={() => sum(p)}
+            className="bg-green-500 mx-3 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+            icon={faPlus}
+          />
+          <FontAwesomeIcon
+            onClick={() => deletep(p)}
+            className=" bg-red-500 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+            icon={faTrash}
+          />
+        </div>
+        <div style={{width:"15%"}} className="border-b text-lg bg-gray-400 py-2">2</div>
+      </div>
+      <div className="flex text-white font-semibold">
+      <div style={{ width: "50%" }} className="border-b md:text-sm lg:text-lg text-justify bg-gray-400 py-2 pl-4">
+        Aceite Orisol 200gr
+      </div>
+      <div style={{ width: "35%" }} className="border-b flex items-center md:text-sm lg:text-lg bg-gray-500 py-2">
+        <FontAwesomeIcon
+          onClick={() => remove(p)}
+          className=" bg-orange-500 mx-3 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+          icon={faMinus}
+        />
+        <span className="mt-1">2</span>
+        <FontAwesomeIcon
+          onClick={() => sum(p)}
+          className="bg-green-500 mx-3 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+          icon={faPlus}
+        />
+        <FontAwesomeIcon
+          onClick={() => deletep(p)}
+          className=" bg-red-500 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+          icon={faTrash}
+        />
+      </div>
+      <div style={{width:"15%"}} className="border-b text-lg bg-gray-400 py-2">2</div>
+    </div>
+    <div className="flex text-white font-semibold">
+    <div style={{ width: "50%" }} className="border-b md:text-sm lg:text-lg text-justify bg-gray-400 py-2 pl-4">
+      Aceite Orisol 200gr
+    </div>
+    <div style={{ width: "35%" }} className="border-b flex items-center md:text-sm lg:text-lg bg-gray-500 py-2">
+      <FontAwesomeIcon
+        onClick={() => remove(p)}
+        className=" bg-orange-500 mx-3 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+        icon={faMinus}
+      />
+      <span className="mt-1">2</span>
+      <FontAwesomeIcon
+        onClick={() => sum(p)}
+        className="bg-green-500 mx-3 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+        icon={faPlus}
+      />
+      <FontAwesomeIcon
+        onClick={() => deletep(p)}
+        className=" bg-red-500 md:w-5 lg:w-7 mt-1 rounded-full p-1 md:h-5 lg:h-7  cursor-pointer"
+        icon={faTrash}
+      />
+    </div>
+    <div style={{width:"15%"}} className="border-b text-lg bg-gray-400 py-2">2</div>
+  </div>
+        {/*prods.length > 0 &&
           prods.map((p, index) => (
             <div key={index} className="flex text-white font-semibold">
               <div className="w-64 text-xs text-justify bg-gray-400 py-2 pl-4">
@@ -67,14 +172,14 @@ export const ProductsList = ({ reload, setReload }) => {
                   : `$${Number(p.price)}`}
               </div>
             </div>
-          ))}
+                ))*/}
       </div>
       <div className="flex text-white font-semibold">
-        <div className="w-64 bg-gray-500 py-2 text-justify pl-4">
+        <div style={{width:"50%"}} className="bg-gray-500 py-2 text-justify pl-4">
           Total a Pagar
         </div>
-        <div className="w-40 bg-gray-600 py-2"></div>
-        <div className="w-32 bg-gray-600 py-2">${total.toFixed(2)}</div>
+        <div style={{width:"35%"}} className=" bg-gray-600 py-2"></div>
+        <div style={{width:"35%"}} className="bg-gray-600 py-2">${100}</div>
       </div>
     </div>
   );
