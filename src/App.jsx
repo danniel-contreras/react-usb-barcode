@@ -7,7 +7,7 @@ function App() {
   const auth = useSelector((state) => state.auth);
   return (
     <>
-      <>{!auth?.isLoggedIn ? <ReactRouter /> : <Auth />}</>
+      <>{auth?.isLoggedIn ? <ReactRouter /> : <Auth />}</>
     </>
   );
 }

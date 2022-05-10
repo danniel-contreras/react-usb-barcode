@@ -88,7 +88,7 @@ export const AddProduct = () => {
   return (
     <Layout>
       <p className="text-red-400 text-xl">AGREGAR NUEVO PRODUCTO</p>
-      <div>
+      <div className="flex justify-center items-center">
         <form onSubmit={formik.handleSubmit}>
           <div className="flex flex-col p-1 mt-1 w-96 text-justify">
             <label className="text-sm font-semibold text-gradient">
@@ -134,29 +134,7 @@ export const AddProduct = () => {
               </span>
             )}
           </div>
-          <div className="flex flex-col p-1 mt-1 w-96 text-justify">
-            <label className="text-sm font-semibold text-gradient">
-              Codigo
-            </label>
-            <input
-              ref={barcode_input}
-              type="text"
-              name="code"
-              onChange={formik.handleChange}
-              placeholder="Ingresa el nombre de la categoria"
-              className={
-                "w-full border p-2 mt-2 text-sm rounded outline-none hover:border-green-400 " +
-                (formik.errors.code && formik.touched.code
-                  ? "border-red-400"
-                  : "border-gray-300")
-              }
-            />
-            {formik.errors.code && formik.touched.code && (
-              <span className="text-sm font-normal text-red-400">
-                {formik.errors.code}
-              </span>
-            )}
-          </div>
+         
           <div className="flex flex-col p-1 mt-1 w-96 text-justify">
             <label className="text-sm font-semibold text-gradient">Stock</label>
             <input
@@ -254,6 +232,29 @@ export const AddProduct = () => {
                 ))}
             </select>
           </div>
+          <div className="flex flex-col p-1 mt-1 w-96 text-justify">
+          <label className="text-sm font-semibold text-gradient">
+            Codigo
+          </label>
+          <input
+            ref={barcode_input}
+            type="text"
+            name="code"
+            onChange={formik.handleChange}
+            placeholder="Ingresa el nombre de la categoria"
+            className={
+              "w-full border p-2 mt-2 text-sm rounded outline-none hover:border-green-400 " +
+              (formik.errors.code && formik.touched.code
+                ? "border-red-400"
+                : "border-gray-300")
+            }
+          />
+          {formik.errors.code && formik.touched.code && (
+            <span className="text-sm font-normal text-red-400">
+              {formik.errors.code}
+            </span>
+          )}
+        </div>
           <button
             type="submit"
             className="bg-quepal w-full text-white py-2 mt-4 text-lg font-semibold px-8 rounded-xl"

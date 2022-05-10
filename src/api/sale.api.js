@@ -17,3 +17,12 @@ export const getSales = (page = 1, take = 10) => {
     },
   });
 };
+
+
+export const getDetailsSale = (id) => {
+  return axios.get(`${API}detail-sales/sale/${id}`, {
+    headers: {
+      authorization: getToken(),
+    },
+  });
+};

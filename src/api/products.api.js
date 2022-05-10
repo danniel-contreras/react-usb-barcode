@@ -10,9 +10,9 @@ export const getProductByCode = (code) => {
   });
 };
 
-export const getProductsPaginated = (page) => {
+export const getProductsPaginated = (page,name) => {
   return axios.get(
-    `${API}products?page=${page}&storeId=${getStore()}&take=10`,
+    `${API}products?page=${page}&storeId=${getStore()}&take=10&name=${name}`,
     {
       headers: {
         authorization: getToken(),

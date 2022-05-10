@@ -6,6 +6,7 @@ import App from "./App";
 import "./index.css";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+  import 'reactjs-crontab/dist/index.css'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

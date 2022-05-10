@@ -4,6 +4,7 @@ import { Auth } from "../pages/Auth";
 import { Home } from "../pages/Home";
 import { Products } from "../pages/Products";
 import { SalesHistory } from "../pages/SalesHistory";
+import { Finances } from "../pages/Finances";
 
 export default function ReactRouter() {
   return (
@@ -14,6 +15,7 @@ export default function ReactRouter() {
         <Route path="/products" element={<Products />} exact />
         <Route path="/add-product" element={<AddProduct />} exact />
         <Route path="/sales-history" element={<SalesHistory />} exact />
+        <Route path="/finances" element={<Finances />} exact />
       </Routes>
     </Router>
   );
