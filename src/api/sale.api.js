@@ -26,3 +26,19 @@ export const getDetailsSale = (id) => {
     },
   });
 };
+
+export const saveExpense = (data)=>{
+  return axios.post(`${API}expenses`, data, {
+    headers: {
+      authorization: getToken(),
+    },
+  });
+}
+
+export const getExpenses = (page = 1, take = 10) => {
+  return axios.get(`${API}expenses?page=${page}&limit=${take}`, {
+    headers: {
+      authorization: getToken(),
+    },
+  });
+};

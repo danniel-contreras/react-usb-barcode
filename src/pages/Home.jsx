@@ -8,14 +8,16 @@ import {
   setItemCart,
 } from "../utils/functions";
 import { ProductsList } from "../components/ProductsList";
+import Modal from "../components/Modal";
 import useEventListener from "../hooks/use-event-listener";
 import Clock from "../components/Clock";
 import { Layout } from "../components/Layout";
 import { addSale } from "../api/sale.api";
 import { toast } from "react-toastify";
-import { getBox } from "../api/box";
+import { closeBox, deleteBox, getBox } from "../api/box";
 import { Box } from "../components/Box";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
+import ExpensesForm from "../components/ExpensesForm";
 
 export const Home = () => {
   const [reload, setReload] = useState(false);
@@ -24,10 +26,14 @@ export const Home = () => {
   const [money, setMoney] = useState(0);
   const [box, setBox] = useState();
   const [newBox, setNewBox] = useState(false);
+  const [cajaFisica, setCajaFisica] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [modalser, setModalser] = useState(false);
 
   const auth = useSelector((state) => state.auth);
-  
+
   useEffect(() => {
+    setNewBox(false);
     return setBox(getBox());
   }, [newBox]);
 
@@ -45,14 +51,16 @@ export const Home = () => {
   };
   useEventListener("keydown", handler);
   const getProduct = (code) => {
-    getProductByCode(code).then(({ data }) => {
-      setItemCart(data.data);
-      setReload(true);
-    }).catch(({response})=>{
-      if(!response.ok){
-        toast.error("No hay productos con este codigo")
-      }
-    });
+    getProductByCode(code)
+      .then(({ data }) => {
+        setItemCart(data.data);
+        setReload(true);
+      })
+      .catch(({ response }) => {
+        if (!response.ok) {
+          toast.error("No hay productos con este codigo");
+        }
+      });
   };
   const onchange = (e) => {
     setCode(e.target.value);
@@ -69,9 +77,8 @@ export const Home = () => {
     setChange(money - getTotal());
   };
   const addNewSale = () => {
-    
     if (getItems()) {
-      const data = { products:getItems(),boxId:getBox() };
+      const data = { products: getItems(), boxId: getBox() };
       addSale(data).then(({ data }) => {
         if (data.ok) {
           toast.success("Se ah realizado la compra");
@@ -80,6 +87,28 @@ export const Home = () => {
         }
       });
     }
+  };
+
+  const close_the_box = () => {
+    if (cajaFisica <= 0) {
+      toast.warning("Debes escribir la cantidad en caja");
+    }
+    const data = {
+      state: false,
+      cajaFisica,
+    };
+    closeBox(data, getBox())
+      .then(({ data }) => {
+        if (data.ok) {
+          toast.success("¡La caja se ah cerrado");
+          deleteBox();
+          setShowModal(false);
+          setNewBox(true);
+        }
+      })
+      .catch(() => {
+        toast.error("No se completo la accion");
+      });
   };
 
   return (
@@ -95,7 +124,7 @@ export const Home = () => {
             <div className="flex flex-col ml-10 responsive__section__two">
               <div className="responsive__cards">
                 <div>
-                  <p className="text-red-500 text-xl md:text-lg lg:text-xl  text-left md:mb-4 lg:mb-6 uppercase">
+                  <p className="text-red-500 text-xl md:text-lg lg:text-xl  text-left md:mb-2 lg:mb-4 uppercase">
                     Buscar Producto
                   </p>
                   <div className="border rounded responsive__card shadow w-full text-justify p-4 flex justify-center flex-col">
@@ -116,7 +145,7 @@ export const Home = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-red-500 responsive__text text-xl md:text-lg lg:text-xl  text-left mb-6 md:mb-4 lg:mb-6 uppercase  mt-6 md:mt-6 lg:mt-6">
+                  <p className="text-red-500 responsive__text text-xl md:text-lg lg:text-xl  text-left md:mb-2 lg:mb-4 uppercase  mt-6 md:mt-6 lg:mt-6">
                     calculo de venta
                   </p>
                   <div className="border responsive__card rounded shadow w-full text-justify p-4 flex justify-center flex-col">
@@ -131,7 +160,7 @@ export const Home = () => {
                         type="number"
                         onChange={onchange_change}
                       />
-                      <span className="text-xl md:text-sm lg:text-xl text-gradient my-3 md:my-2 lg:my-3">
+                      <span className="text-xl md:text-sm lg:text-xl text-gradient my-2">
                         Cambio: ${change}
                       </span>
                       <button className="bg-very-blue text-white py-3 md:py-1 lg:py-3 rounded-xl text-xl md:text-base lg:text-xl font-semibold mt-3">
@@ -144,12 +173,21 @@ export const Home = () => {
               <div className="responsive__group__buttons">
                 <button
                   onClick={addNewSale}
-                  className="bg-quepal w-full text-white py-4 md:py-1 lg:py-4 mt-8 md:mt-4 lg:mt-8  text-xl md:text-base lg:text-xl font-semibold px-8 rounded-2xl"
+                  className="bg-quepal w-full text-white py-4 md:py-1 lg:py-3 md:mt-4 lg:mt-6  text-xl md:text-base lg:text-lg font-semibold px-8 rounded-2xl"
                 >
                   Realizar Venta
                 </button>
-                <button className="bg-hydrogen w-full text-white py-4 md:py-1 lg:py-4 mt-8 md:mt-4 lg:mt-8  text-xl md:text-base lg:text-xl font-semibold px-8 rounded-2xl">
+                <button
+                  onClick={() => setModalser(true)}
+                  className="bg-hydrogen w-full text-white py-4 md:py-1 lg:py-3 md:mt-4 lg:mt-4  text-xl md:text-base lg:text-lg font-semibold px-8 rounded-2xl"
+                >
                   Venta de Servicios
+                </button>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="bg-sunrise w-full text-white py-4 md:py-1 lg:py-3 md:mt-4 lg:mt-4  text-xl md:text-base lg:text-lg font-semibold px-8 rounded-2xl"
+                >
+                  Cerrar Caja
                 </button>
               </div>
             </div>
@@ -171,6 +209,36 @@ export const Home = () => {
           </div>
         </>
       )}
+      <Modal
+        title="Cerrar Caja Actual"
+        showModal={showModal}
+        setShowModal={setShowModal}
+      >
+        <div className="flex flex-col w-72">
+          <label className="text-sm md:text-xs lg:text-sm text-gradient font-bold">
+            Total en caja
+          </label>
+          <input
+            placeholder="Escribe la cantidad"
+            type="number"
+            onChange={(e) => setCajaFisica(e.currentTarget.value)}
+            className="border rounded w-fulll mt-1 px-2 py-2 md:py-1 lg:py-2 text-sm md:text-xs lg:text-sm"
+          />
+          <button
+            onClick={close_the_box}
+            className="bg-hydrogen w-full text-white py-4 md:py-1 lg:py-3 md:mt-4 lg:mt-4  text-xl md:text-base lg:text-lg font-semibold px-8 rounded-2xl"
+          >
+            Cerrar Caja
+          </button>
+        </div>
+      </Modal>
+      <Modal
+        showModal={modalser}
+        setShowModal={setModalser}
+        title="Nuevo servicio de venta"
+      >
+        <ExpensesForm setShow={setModalser} />
+      </Modal>
     </Layout>
   );
 };

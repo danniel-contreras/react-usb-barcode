@@ -21,3 +21,11 @@ export const addBox = (data) => {
     },
   });
 };
+
+export const closeBox = (data, id) => {
+  return axios.put(`${API}box/${id}`, data, {
+    headers: {
+      authorization: getToken(),
+    },
+  });
+};

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { login } from "../api/auth.api";
 import { useDispatch } from "react-redux";
 import { newLogin } from "../redux/actions/auth.actions";
+import { toast } from "react-toastify";
 
 export const Auth = () => {
   const [data, setData] = useState({ email: "", pass: "" });
@@ -12,14 +13,16 @@ export const Auth = () => {
 
   const onsubmit = (e) => {
     e.preventDefault();
-    login(data).then(({ data }) => {
-      console.log(data);
-      if (!data.ok) {
-        console.log("error");
-        return;
-      }
-      dispatch(newLogin(data.token, data.data?.roles.id, data.data?.stores.id));
-    });
+    login(data)
+      .then(({ data }) => {
+        toast.success("¡¡Bienvenido");
+        dispatch(
+          newLogin(data.token, data.data?.roles.id, data.data?.stores.id)
+        );
+      })
+      .catch(() => {
+        toast.error("¡¡Los datos son incorrectos");
+      });
   };
 
   return (
