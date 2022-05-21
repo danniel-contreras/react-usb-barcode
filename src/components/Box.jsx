@@ -2,6 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { addBox, saveBox } from "../api/box";
+import { toast } from "react-toastify";
 
 export const Box = ({ setNewBox }) => {
   const formik = useFormik({
@@ -15,9 +16,12 @@ export const Box = ({ setNewBox }) => {
     onSubmit: (values) => {
       addBox(values).then(({ data }) => {
         if (data.ok) {
+          toast.info("Se creo la caja!!")
           saveBox(data.expenses.id);
           setNewBox(true);
         }
+      }).catch(()=>{
+        toast.error("Ah ocurrido un error inesperado")
       });
     },
   });

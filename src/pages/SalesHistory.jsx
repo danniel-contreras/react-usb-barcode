@@ -10,6 +10,7 @@ import THTable from "../components/THTable";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
 import { Details } from "../components/Details";
+import { toast } from "react-toastify";
 
 export const SalesHistory = () => {
   const [sales, setSales] = useState([]);
@@ -43,6 +44,8 @@ export const SalesHistory = () => {
           current: data.curentPag,
         });
       }
+    }).catch(()=>{
+      toast.warning("Intente mas tarde!!")
     });
   };
   const getAllExpenses = (page) => {
@@ -56,6 +59,8 @@ export const SalesHistory = () => {
           current: data.curentPag,
         });
       }
+    }).catch(()=>{
+      toast.warning("Intente mas tarde!!")
     });
   };
 

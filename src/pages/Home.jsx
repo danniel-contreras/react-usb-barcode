@@ -85,6 +85,8 @@ export const Home = () => {
           deleteItems();
           setReload(true);
         }
+      }).catch(()=>{
+        toast.error("Ah ocurrido un error inesperado")
       });
     }
   };
@@ -92,6 +94,7 @@ export const Home = () => {
   const close_the_box = () => {
     if (cajaFisica <= 0) {
       toast.warning("Debes escribir la cantidad en caja");
+      return;
     }
     const data = {
       state: false,

@@ -4,7 +4,6 @@ import { ChartBar } from "../components/Chart";
 import { LineChart } from "../components/LineChart";
 
 import { getSales } from "../api/sale.api";
-import { getSalerPerDate } from "../utils/filters";
 import { reduceTotal } from "../utils/reducers";
 
 export const Finances = () => {
@@ -14,8 +13,9 @@ export const Finances = () => {
     getSales(1, 100000000000).then(({ data }) => {
       if (data.ok) {
         setSales(data.sales);
-        console.log(getSalerPerDate(3, data.sales));
       }
+    }).catch(()=>{
+      toast.warning("Intente mas tarde!!")
     });
   };
 

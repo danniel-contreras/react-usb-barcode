@@ -36,20 +36,33 @@ export const LineChart = ({ sales }) => {
     },
   };
 
-  const labels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun"];
+  const labels =
+    new Date().getMonth() <= 5
+      ? ["Ene", "Feb", "Mar", "Abr", "May", "Jun"]
+      : ["Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
   const data = {
     labels,
     datasets: [
       {
         label: "Numero de ventas",
-        data: [
-          getSalerPerMonth(1, sales),
-          getSalerPerMonth(2, sales),
-          getSalerPerMonth(3,sales),
-          getSalerPerMonth(4,sales),
-          getSalerPerMonth(5,sales),
-          getSalerPerMonth(6,sales),
-        ],
+        data:
+          new Date().getMonth() <= 5
+            ? [
+                getSalerPerMonth(1, sales),
+                getSalerPerMonth(2, sales),
+                getSalerPerMonth(3, sales),
+                getSalerPerMonth(4, sales),
+                getSalerPerMonth(5, sales),
+                getSalerPerMonth(6, sales),
+              ]
+            : [
+                getSalerPerMonth(7, sales),
+                getSalerPerMonth(8, sales),
+                getSalerPerMonth(9, sales),
+                getSalerPerMonth(10, sales),
+                getSalerPerMonth(11, sales),
+                getSalerPerMonth(12, sales),
+              ],
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },

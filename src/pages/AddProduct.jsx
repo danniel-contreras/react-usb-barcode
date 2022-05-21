@@ -8,6 +8,7 @@ import { getStores } from "../api/stores.api";
 import { getStore } from "../api/token";
 import { Link, useNavigate } from "react-router-dom";
 import { addProduct } from "../api/products.api";
+import { toast } from "react-toastify";
 
 export const AddProduct = () => {
   const [stores, setStores] = useState([]);
@@ -78,11 +79,16 @@ export const AddProduct = () => {
     }),
     onSubmit: (values) => {
       const data = { ...values, storesId: getStore() };
-      addProduct(data).then(({ data }) => {
-        if (data.ok) {
-          navigate("/products");
-        }
-      });
+      addProduct(data)
+        .then(({ data }) => {
+          if (data.ok) {
+            toast.info("Se guardo el producto con exito");
+            navigate("/products");
+          }
+        })
+        .catch(() => {
+          toast.error("Ah ocurrido un error inesperado!!");
+        });
     },
   });
   return (
@@ -134,7 +140,7 @@ export const AddProduct = () => {
               </span>
             )}
           </div>
-         
+
           <div className="flex flex-col p-1 mt-1 w-96 text-justify">
             <label className="text-sm font-semibold text-gradient">Stock</label>
             <input
@@ -233,28 +239,28 @@ export const AddProduct = () => {
             </select>
           </div>
           <div className="flex flex-col p-1 mt-1 w-96 text-justify">
-          <label className="text-sm font-semibold text-gradient">
-            Codigo
-          </label>
-          <input
-            ref={barcode_input}
-            type="text"
-            name="code"
-            onChange={formik.handleChange}
-            placeholder="Ingresa el nombre de la categoria"
-            className={
-              "w-full border p-2 mt-2 text-sm rounded outline-none hover:border-green-400 " +
-              (formik.errors.code && formik.touched.code
-                ? "border-red-400"
-                : "border-gray-300")
-            }
-          />
-          {formik.errors.code && formik.touched.code && (
-            <span className="text-sm font-normal text-red-400">
-              {formik.errors.code}
-            </span>
-          )}
-        </div>
+            <label className="text-sm font-semibold text-gradient">
+              Codigo
+            </label>
+            <input
+              ref={barcode_input}
+              type="text"
+              name="code"
+              onChange={formik.handleChange}
+              placeholder="Ingresa el nombre de la categoria"
+              className={
+                "w-full border p-2 mt-2 text-sm rounded outline-none hover:border-green-400 " +
+                (formik.errors.code && formik.touched.code
+                  ? "border-red-400"
+                  : "border-gray-300")
+              }
+            />
+            {formik.errors.code && formik.touched.code && (
+              <span className="text-sm font-normal text-red-400">
+                {formik.errors.code}
+              </span>
+            )}
+          </div>
           <button
             type="submit"
             className="bg-quepal w-full text-white py-2 mt-4 text-lg font-semibold px-8 rounded-xl"
@@ -268,7 +274,7 @@ export const AddProduct = () => {
           <Link to="/products">Regresar</Link>
         </button>
         <button className="bg-danger mx-4 mt-6 text-white py-2 text-lg font-semibold px-12 rounded">
-        <Link to="/">Ir al Inicio</Link>
+          <Link to="/">Ir al Inicio</Link>
         </button>
       </div>
     </Layout>
