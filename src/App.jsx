@@ -14,7 +14,7 @@ function App() {
   });
   return (
     <>
-      <>{!auth?.isLoggedIn ? <ReactRouter /> : <Auth />}</>
+      <>{auth?.isLoggedIn ? <ReactRouter /> : <Auth />}</>
     </>
   );
 }
