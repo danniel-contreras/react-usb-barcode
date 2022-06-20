@@ -3,7 +3,7 @@ import { types } from "../types";
 
 export const newLogin = (token, role, store) => {
   return (dispatch) => {
-    setToken(token, role, store);
+    setToken(token, store, role);
     dispatch(login(decodeToken(token)));
   };
 };

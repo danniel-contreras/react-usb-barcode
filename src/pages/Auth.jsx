@@ -11,13 +11,13 @@ export const Auth = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const onsubmit = (e) => {
+  const onsubmit = (e) => {      
     e.preventDefault();
     login(data)
       .then(({ data }) => {
         toast.success("¡¡Bienvenido");
         dispatch(
-          newLogin(data.token, data.data?.roles.id, data.data?.stores.id)
+          newLogin(data.token, data.data?.stores.id, data.data?.roles.id)
         );
       })
       .catch(() => {
