@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  getItems,
-  getTotal,
-  removeItem,
-  sumItemCart,
-} from "../utils/functions";
-import { faPlus, faTrash, faMinus } from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getItems, getTotal, removeItem, sumItemCart } from '../utils/functions';
+import { faPlus, faTrash, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 export const ProductsList = ({ reload, setReload }) => {
   const [prods, setProds] = useState([]);
@@ -18,11 +13,11 @@ export const ProductsList = ({ reload, setReload }) => {
     return setProds(getItems());
   }, [reload]);
   const remove = (item) => {
-    removeItem(item, "minus");
+    removeItem(item, 'minus');
     setReload(true);
   };
   const deletep = (item) => {
-    removeItem(item, "remove");
+    removeItem(item, 'remove');
     setReload(true);
   };
   const sum = (item) => {
@@ -30,18 +25,16 @@ export const ProductsList = ({ reload, setReload }) => {
     setReload(true);
   };
   return (
-    <div className="mt-3">
-      <p className="text-red-500 text-xl md:text-lg lg:text-xl  text-left mb-6">
-        LISTADO DE PRODUCTOS
-      </p>
+    <div>
+      <p className="text-red-500 text-base font-semibold  text-left mb-2">LISTADO DE PRODUCTOS</p>
       <div className="flex text-white font-semibold">
-        <div style={{ width: "50%" }} className="bg-gray-500 py-2">
+        <div style={{ width: '50%' }} className="bg-gray-500 py-2">
           Producto
         </div>
-        <div style={{ width: "35%" }} className="bg-gray-600 py-2">
+        <div style={{ width: '35%' }} className="bg-gray-600 py-2">
           Cantidad
         </div>
-        <div style={{ width: "15%" }} className="bg-gray-500 py-2">
+        <div style={{ width: '15%' }} className="bg-gray-500 py-2">
           Total
         </div>
       </div>
@@ -50,13 +43,13 @@ export const ProductsList = ({ reload, setReload }) => {
           prods.map((p, index) => (
             <div key={index} className="flex text-white font-semibold">
               <div
-                style={{ width: "50%" }}
+                style={{ width: '50%' }}
                 className="border-b md:text-sm lg:text-lg text-justify bg-gray-400 py-2 pl-4"
               >
                 {p.name}
               </div>
               <div
-                style={{ width: "35%" }}
+                style={{ width: '35%' }}
                 className="border-b flex items-center md:text-sm lg:text-lg bg-gray-500 py-2"
               >
                 <FontAwesomeIcon
@@ -76,10 +69,7 @@ export const ProductsList = ({ reload, setReload }) => {
                   icon={faTrash}
                 />
               </div>
-              <div
-                style={{ width: "15%" }}
-                className="border-b text-lg bg-gray-400 py-2"
-              >
+              <div style={{ width: '15%' }} className="border-b text-lg bg-gray-400 py-2">
                 {p.quantity && p.quantity > 1
                   ? `$${(Number(p.quantity) * Number(p.price)).toFixed(2)}`
                   : `$${Number(p.price)}`}
@@ -88,14 +78,11 @@ export const ProductsList = ({ reload, setReload }) => {
           ))}
       </div>
       <div className="flex text-white font-semibold">
-        <div
-          style={{ width: "50%" }}
-          className="bg-gray-500 py-2 text-justify pl-4"
-        >
+        <div style={{ width: '50%' }} className="bg-gray-500 py-2 text-justify pl-4">
           Total a Pagar
         </div>
-        <div style={{ width: "35%" }} className=" bg-gray-600 py-2"></div>
-        <div style={{ width: "35%" }} className="bg-gray-600 py-2">
+        <div style={{ width: '35%' }} className=" bg-gray-600 py-2"></div>
+        <div style={{ width: '35%' }} className="bg-gray-600 py-2">
           ${total}
         </div>
       </div>
