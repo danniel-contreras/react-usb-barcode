@@ -34,7 +34,9 @@
     "reactjs-crontab": "^4.5.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "yup": "^0.32.11"
+    "simple-zustand-devtools": "^1.1.0",
+    "yup": "^0.32.11",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

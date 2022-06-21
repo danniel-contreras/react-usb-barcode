@@ -6,22 +6,9 @@ import Pagination from "../components/Pagination";
 import Table from "../components/Table";
 import TDTable from "../components/TDTable";
 import THTable from "../components/THTable";
-import Crontab from "reactjs-crontab";
+import { useProductStore } from "../store/productsStore";
 
 export const Products = () => {
-  const sayHello = () => {
-    console.log("HOLA MUNDO");
-  };
-  const tasks = useMemo(
-    () => [
-      {
-        fn: sayHello,
-        config: "30 19 * * *",
-        // this runs every minutes
-      },
-    ],
-    []
-  );
   const [products, setProducts] = useState([]);
   const [pagination, setPagination] = useState({
     total: 0,
@@ -48,20 +35,11 @@ export const Products = () => {
   useEffect(() => {
     return getProducts(page);
   }, [page]);
-
   useEffect(() => {
     return getProducts(1, name);
-  }, [name]);
+  }, [name,page]);
   return (
     <Layout>
-      <Crontab
-        tasks={tasks}
-        timeZone="local" // UTC timezone.
-        dashboard={{
-          hidden: false, // if true, dashboard is hidden
-          route: "/", // dashboard will only appear in '/' route
-        }}
-      />
       <p className="text-red-500 text-xl">LISTA DE PRODUCTOS DISPONIBLES</p>
       <div className="flex mt-2">
         <div className="mt-1">
