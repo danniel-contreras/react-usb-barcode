@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { getProductByCode } from '../api/products.api';
-import { deleteItems, formatDate, getItems, getTotal, setItemCart } from '../utils/functions';
-import { ProductsList } from '../components/ProductsList';
-import Modal from '../components/Modal';
-import useEventListener from '../hooks/use-event-listener';
-import Clock from '../components/Clock';
-import { Layout } from '../components/Layout';
-import { addSale } from '../api/sale.api';
-import { toast } from 'react-toastify';
-import { closeBox, deleteBox, getBox } from '../api/box';
-import { Box } from '../components/Box';
-import { useSelector } from 'react-redux';
-import ExpensesForm from '../components/ExpensesForm';
+import React, { useState, useEffect } from "react";
+import { getProductByCode } from "../api/products.api";
+import {
+  deleteItems,
+  formatDate,
+  getItems,
+  getTotal,
+  setItemCart,
+} from "../utils/functions";
+import { ProductsList } from "../components/ProductsList";
+import Modal from "../components/Modal";
+import useEventListener from "../hooks/use-event-listener";
+import Clock from "../components/Clock";
+import { Layout } from "../components/Layout";
+import { addSale } from "../api/sale.api";
+import { toast } from "react-toastify";
+import { closeBox, deleteBox, getBox } from "../api/box";
+import { Box } from "../components/Box";
+import { useSelector } from "react-redux";
+import ExpensesForm from "../components/ExpensesForm";
 
 export const Home = () => {
   const [reload, setReload] = useState(false);
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState("");
   const [change, setChange] = useState(0);
-  const [money, setMoney] = useState(0);
   const [box, setBox] = useState();
   const [newBox, setNewBox] = useState(false);
   const [cajaFisica, setCajaFisica] = useState(0);
@@ -31,19 +36,19 @@ export const Home = () => {
     return setBox(getBox());
   }, [newBox]);
 
-  let barcode = '';
+  let barcode = "";
   let interval;
   const handler = function (evt) {
     if (interval) clearInterval(interval);
-    if (evt.code == 'Enter') {
+    if (evt.code == "Enter") {
       if (barcode) getProduct(barcode);
-      barcode = '';
+      barcode = "";
       return;
     }
-    if (evt.key != 'Shift') barcode += evt.key;
-    interval = setInterval(() => (barcode = ''), 200000);
+    if (evt.key != "Shift") barcode += evt.key;
+    interval = setInterval(() => (barcode = ""), 200000);
   };
-  useEventListener('keydown', handler);
+  useEventListener("keydown", handler);
   const getProduct = (code) => {
     getProductByCode(code)
       .then(({ data }) => {
@@ -52,7 +57,7 @@ export const Home = () => {
       })
       .catch(({ response }) => {
         if (!response.ok) {
-          toast.error('No hay productos con este codigo');
+          toast.error("No hay productos con este codigo");
         }
       });
   };
@@ -64,10 +69,11 @@ export const Home = () => {
     getProduct(code);
   };
   const onchange_change = (e) => {
-    setMoney(e.target.value);
-  };
-  const onsubmit_change = (e) => {
-    e.preventDefault();
+    const money = Number(e.target.value);
+    if(money === 0){
+      setChange(0);
+      return;
+    }
     setChange(money - getTotal());
   };
   const addNewSale = () => {
@@ -76,20 +82,20 @@ export const Home = () => {
       addSale(data)
         .then(({ data }) => {
           if (data.ok) {
-            toast.success('Se ah realizado la compra');
+            toast.success("Se ah realizado la compra");
             deleteItems();
             setReload(true);
           }
         })
         .catch(() => {
-          toast.error('Ah ocurrido un error inesperado');
+          toast.error("Ah ocurrido un error inesperado");
         });
     }
   };
 
   const close_the_box = () => {
     if (cajaFisica <= 0) {
-      toast.warning('Debes escribir la cantidad en caja');
+      toast.warning("Debes escribir la cantidad en caja");
       return;
     }
     const data = {
@@ -99,14 +105,14 @@ export const Home = () => {
     closeBox(data, getBox())
       .then(({ data }) => {
         if (data.ok) {
-          toast.success('¡La caja se ah cerrado');
+          toast.success("¡La caja se ah cerrado");
           deleteBox();
           setShowModal(false);
           setNewBox(true);
         }
       })
       .catch(() => {
-        toast.error('No se completo la accion');
+        toast.error("No se completo la accion");
       });
   };
 
@@ -127,7 +133,9 @@ export const Home = () => {
                     Buscar por Codigo
                   </p>
                   <div className="border rounded responsive__card shadow w-full text-justify p-4 flex justify-center flex-col">
-                    <label className="text-sm text-gradient font-bold">Ingresar el Codigo</label>
+                    <label className="text-sm text-gradient font-bold">
+                      Ingresar el Codigo
+                    </label>
                     <form onSubmit={onsubmit} className="flex">
                       <input
                         className="border rounded w-64 px-2 mt-1 py-1 text-sm md:text-xs lg:text-sm"
@@ -149,21 +157,21 @@ export const Home = () => {
                     <label className="text-sm md:text-xs lg:text-sm text-gradient font-bold">
                       Ingresar Cantidad de pago
                     </label>
-                    <form onSubmit={onsubmit_change} className="flex flex-col">
-                      <div className="flex w-full">
-                        <input
-                          className="border rounded w-64 mt-1 px-2 py-1 text-sm md:text-xs lg:text-sm"
-                          placeholder="Escribe la cantidad de pago"
-                          name="change"
-                          type="number"
-                          onChange={onchange_change}
-                        />
-                        <button className="bg-very-blue text-white py-2 rounded-xl text-base font-semibold mt-1 ml-4 px-8">
-                          Aceptar
-                        </button>
-                      </div>
-                      <span className="text-base text-gradient my-2">Cambio: ${change}</span>
-                    </form>
+
+                    <div className="flex w-full">
+                      <input
+                        step=".01"
+                        min={0}
+                        className="border rounded w-64 mt-1 px-2 py-1 text-sm md:text-xs lg:text-sm"
+                        placeholder="Escribe la cantidad de pago"
+                        name="change"
+                        type="number"
+                        onChange={onchange_change}
+                      />
+                    </div>
+                    <span className="text-base text-gradient my-2">
+                      Cambio: ${change}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -192,15 +200,27 @@ export const Home = () => {
             </div>
           </div>
           <div className="flex justify-center responsive__footer md:justify-start lg:justify-center md:mt-0 lg:mt-8">
-            <p className="text-xl md:text-sm lg:text-xl font-semibold px-4">{auth?.user.email}</p>
-            <span className="text-xl md:text-sm lg:text-xl font-semibold">-</span>
+            <p className="text-xl md:text-sm lg:text-xl font-semibold px-4">
+              {auth?.user.email}
+            </p>
+            <span className="text-xl md:text-sm lg:text-xl font-semibold">
+              -
+            </span>
             <Clock />
-            <span className="text-xl md:text-sm lg:text-xl font-semibold">-</span>
-            <p className="text-xl md:text-sm lg:text-xl font-semibold px-4">{formatDate()}</p>
+            <span className="text-xl md:text-sm lg:text-xl font-semibold">
+              -
+            </span>
+            <p className="text-xl md:text-sm lg:text-xl font-semibold px-4">
+              {formatDate()}
+            </p>
           </div>
         </>
       )}
-      <Modal title="Cerrar Caja Actual" showModal={showModal} setShowModal={setShowModal}>
+      <Modal
+        title="Cerrar Caja Actual"
+        showModal={showModal}
+        setShowModal={setShowModal}
+      >
         <div className="flex flex-col w-72">
           <label className="text-sm md:text-xs lg:text-sm text-gradient font-bold">
             Total en caja
@@ -219,7 +239,11 @@ export const Home = () => {
           </button>
         </div>
       </Modal>
-      <Modal showModal={modalser} setShowModal={setModalser} title="Nuevo servicio de venta">
+      <Modal
+        showModal={modalser}
+        setShowModal={setModalser}
+        title="Nuevo servicio de venta"
+      >
         <ExpensesForm setShow={setModalser} />
       </Modal>
     </Layout>

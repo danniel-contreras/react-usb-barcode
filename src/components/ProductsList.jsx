@@ -83,7 +83,7 @@ export const ProductsList = ({ reload, setReload }) => {
         </div>
         <div style={{ width: '35%' }} className=" bg-gray-600 py-2"></div>
         <div style={{ width: '35%' }} className="bg-gray-600 py-2">
-          ${total}
+          ${total.toFixed(2)}
         </div>
       </div>
     </div>

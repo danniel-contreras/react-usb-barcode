@@ -12,7 +12,7 @@ export const getProductByCode = (code) => {
 
 export const getProductsPaginated = (page,name) => {
   return axios.get(
-    `${API}products?page=${page}&storeId=${getStore()}&take=10&name=${name}`,
+    `${API}products?page=${page}&storeId=${getStore()}&take=5&name=${name}`,
     {
       headers: {
         authorization: getToken(),

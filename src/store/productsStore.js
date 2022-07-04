@@ -5,16 +5,20 @@ import { getProductsPaginated } from "../api/products.api";
 
 export const useProductStore = create(
   persist((set) => ({
-    productos: [],
+    products: [],
     pagination: {},
     fetchProducts: (page = 1, name = "") => {
+      if (name !== "") {
+        page = 1;
+      }
       getProductsPaginated(page, name).then(({ data }) => {
-        set({ productos: data.products });
+        set({ products: data.products });
         set({
           pagination: {
             total: data.total,
             last: data.totalPag,
             current: data.curentPag,
+            size:5
           },
         });
       });
@@ -22,8 +26,6 @@ export const useProductStore = create(
   }))
 );
 
-
 if (process.env.NODE_ENV === "development") {
-    mountStoreDevtool("Store", useProductStore);
-  }
-  
+  mountStoreDevtool("Store", useProductStore);
+}

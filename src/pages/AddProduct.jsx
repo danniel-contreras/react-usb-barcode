@@ -101,9 +101,9 @@ export const AddProduct = () => {
   return (
     <Layout>
       <p className="text-red-400 text-xl">AGREGAR NUEVO PRODUCTO</p>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mr-10">
         <form onSubmit={formik.handleSubmit}>
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-2 gap-16 ">
             <div>
               <div className="flex flex-col p-1 mt-1 w-96 text-justify">
                 <label className="text-sm font-semibold text-gradient">
@@ -283,14 +283,6 @@ export const AddProduct = () => {
             Guardar
           </button>
         </form>
-      </div>
-      <div className="flex">
-        <button className="gradient-noname mx-4 mt-6 text-white py-2 text-lg font-semibold px-12 rounded">
-          <Link to="/products">Regresar</Link>
-        </button>
-        <button className="bg-danger mx-4 mt-6 text-white py-2 text-lg font-semibold px-12 rounded">
-          <Link to="/">Ir al Inicio</Link>
-        </button>
       </div>
     </Layout>
   );

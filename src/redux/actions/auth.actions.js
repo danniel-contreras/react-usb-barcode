@@ -1,7 +1,7 @@
 import { decodeToken, setToken, removeToken } from "../../api/token";
 import { types } from "../types";
 
-export const newLogin = (token, role, store) => {
+export const newLogin = (token, store, role) => {
   return (dispatch) => {
     setToken(token, store, role);
     dispatch(login(decodeToken(token)));

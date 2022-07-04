@@ -27,6 +27,7 @@
     "react-beforeunload": "^2.5.3",
     "react-chartjs-2": "^4.1.0",
     "react-dom": "^18.0.0",
+    "react-lottie": "^1.2.3",
     "react-redux": "^8.0.1",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
